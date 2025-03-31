@@ -33,6 +33,6 @@ public interface UserApi {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Список пользователей успешно получен")
     })
-    public ResponseEntity<List<UserDto>> getAllUsers();
+    ResponseEntity<List<UserDto>> getAllUsers();
 
 }
