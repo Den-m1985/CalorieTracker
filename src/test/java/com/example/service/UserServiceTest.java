@@ -117,7 +117,6 @@ public class UserServiceTest {
         int countUsers = 10;
         for (int i = 0; i < countUsers; i++) {
             User newUser = new User();
-//            newUser.setEmail(i + email);
             newUser.setPassword(password);
             newUser.setAge(age);
             newUser.setWeight(weight);
