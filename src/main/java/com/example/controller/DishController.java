@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/dish")
 @RequiredArgsConstructor
-public class DishController {
+public class DishController implements DishApi{
     private final DishService dishService;
 
     @GetMapping
