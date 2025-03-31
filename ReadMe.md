@@ -55,3 +55,72 @@
 - написать юнит-тесты для основной логики;
 
 - реализовать обработку ошибок (например, если пользователь не найден).
+
+
+## В проекте настроен workflows
+Рабочие процессы определяются в каталоге .github/workflows в репозитории.  
+Тесты запускаются с базой данных H2
+
+## Запуск проекта в IDEA:
+Сначала необходимо запустить базу данных в контейнере:
+```shell
+docker compose up
+```
+Запускаем CalorieTrackerApplication в своей среде разработке  
+или в терминале в корне проекта:
+```shell
+mvn spring-boot:run
+```
+## Так же можно запустить проект в docker:
+Если нужно запустить проект в контейнере, то раскомментируем секцию app в docker compose.
+```shell
+docker compose up
+```
+Проект и база данных будет запущены в контейнере.
+
+
+### Deploy APP на VDS сервер:
+Собираем образ
+```shell
+docker build -t task_app .
+```
+
+Сохраняем контейнер в файл (в ту же директорию, где и образ)
+```shell
+sudo docker save -o task_app.tar task_app
+```
+
+Копируем на сервер по SSH (~ означает сохранить в домашнюю директорию)
+```shell
+sudo scp task_app.tar root@[12.345.678.9101]:~
+```
+
+Заходим на наш сервер:
+```shell
+ssh root@[12.345.678.9101]
+```
+
+Импортируем образ из файла на сервере:
+```shell
+docker load < task_app.tar
+```
+
+Запускаем контейнер на сервере в режиме демона:
+```shell
+docker run -d -p [port]:[port] task_app
+```
+
+Удаляем файл на сервере
+```shell
+rm task_app.tar
+```
+
+### Deploy POSTGRES на VDS сервер:
+```shell
+docker run -d --name task -e POSTGRES_DB=task -e POSTGRES_USER=[insert name] -e POSTGRES_PASSWORD=[insert password] -p 5432:5432 postgres:latest
+```
+
+заходим внутрь контейнера
+```shell
+docker exec -it task psql -U postgres_task task
+```
