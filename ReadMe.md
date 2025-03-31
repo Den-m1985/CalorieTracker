@@ -78,6 +78,8 @@ docker compose up
 ```
 Проект и база данных будет запущены в контейнере.
 
+### Swagger доступен по адресу:
+http://localhost:8080/swagger-ui/index.html#/
 
 ### Deploy APP на VDS сервер:
 Собираем образ
